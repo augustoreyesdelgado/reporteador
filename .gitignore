@@ -12,6 +12,7 @@ venv/
 
 # Env/Secrets (usa Secret Manager en prod)
 .env
+.env.dev
 .env.*
 
 # Otros
