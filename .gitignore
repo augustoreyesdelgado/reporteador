@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Entornos
+.venv/
+env/
+venv/
+
+# Env/Secrets (usa Secret Manager en prod)
+.env
+.env.*
+
+# Otros
+.ipynb_checkpoints/
+dist/
+build/
+*.egg-info/

@@ -1,12 +1,25 @@
-.git
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Cache Python
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
+
+# Archivos locales
 *.log
-.venv
+*.sqlite3
+
+# Configuración local
 .env
 .env.*
-.ipynb_checkpoints
-dist
-build
+
+# IDE
+.vscode/
+.idea/
+
+# Solo para dev
+docker-compose.dev.yml
+Dockerfile.dev
