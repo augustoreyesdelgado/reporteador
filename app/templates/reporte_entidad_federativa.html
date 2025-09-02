@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <title>REPORTE DE ADMINISTRADOR: ENTIDAD FEDERATIVA</title>
+  <style>
+    @page {
+      size: A4 landscape;
+      margin: 14mm;
+    }
+    body {
+      font-family: "DejaVu Sans", Arial, sans-serif;
+      font-size: 12px;
+      color: #222;
+    }
+    header {
+      border-bottom: 2px solid #000;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+    }
+    h1 { font-size: 18px; margin: 0; }
+    h2 { font-size: 14px; margin: 12px 0 6px 0; }
+    h3 { font-size: 12px; margin: 6px 0; }
+    .meta { margin: 3px 0; }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 8px;
+    }
+    th, td {
+      border: 1px solid #000;
+      padding: 4px 6px;
+      font-size: 11px;
+    }
+    th {
+      background: #eee;
+      text-align: left;
+    }
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 10px;
+    }
+    .chart img {
+      max-width: 100%;
+      max-height: 70mm;  /* fuerza a que no exceda ~1/4 de la hoja */
+      object-fit: contain;
+    }
+    .chart {
+      height: 80mm;      /* altura fija de cada celda */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>REPORTE DE ADMINISTRADOR: ENTIDAD FEDERATIVA</h1>
+    <div class="meta">Fecha: {{ fecha }}</div>
+    <div class="meta">Nombre: ___________________________________________</div>
+    <div class="meta">Cargo: _____________________________________________</div>
+    <div class="meta">Institución: ________________________________________</div>
+  </header>
+
+  <!-- Tabla de registros -->
+  <section>
+    <h2>DETALLE DE REGISTROS</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Institución</th>
+          <th>Patentes</th>
+          <th>Tipo</th>
+          <th>DA</th>
+          <th>MU</th>
+          <th>DI</th>
+          <th>MC</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in data %}
+        <tr>
+          <td>{{ row.institucion }}</td>
+          <td>{{ row.patentes }}</td>
+          <td>{{ row.tipo }}</td>
+          <td>{{ row.da }}</td>
+          <td>{{ row.mu }}</td>
+          <td>{{ row.di }}</td>
+          <td>{{ row.mc }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p>PT: Patente; DD: Derechos de autor; MU: Modelo de Utilidad; DI: Diseño Industrial; MC: Marca (signo distintivo)</p>
+  </section>
+
+  <!-- Sección de gráficos -->
+   
+  <section>
+    <h2>Indicadores</h2>
+    <div class="charts-grid">
+      <div class="chart">
+        <h3>Distribución de estatus</h3>
+        {% if charts.estatus %}
+          <img src="{{ charts.estatus }}" alt="Estatus: Aprobadas vs En trámite">
+        {% else %}<div>No data</div>{% endif %}
+      </div>
+      <div class="chart">
+        <h3>Tiempo promedio de aprobación (meses)</h3>
+        {% if charts.tiempo_promedio %}
+          <img src="{{ charts.tiempo_promedio }}" alt="Tiempo promedio por tipo">
+        {% else %}<div>No data</div>{% endif %}
+      </div>
+      <div class="chart">
+        <h3>Distribución por tipo de tecnológico</h3>
+        {% if charts.por_tipo_tec %}
+          <img src="{{ charts.por_tipo_tec }}" alt="Federal vs Descentralizado">
+        {% else %}<div>No data</div>{% endif %}
+      </div>
+      <div class="chart">
+        <h3>Distribución por tipo de PI</h3>
+        {% if charts.por_tipo_pi %}
+          <img src="{{ charts.por_tipo_pi }}" alt="DA, MU, DI, MC">
+        {% else %}<div>No data</div>{% endif %}
+      </div>
+    </div>
+  </section>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <title>{{ title }}</title>
+  <style>
+    body { font-family: "DejaVu Sans", Arial, sans-serif; font-size: 12px; color: #222; }
+    header { border-bottom: 2px solid #333; margin-bottom: 10px; padding-bottom: 6px; }
+    h1 { margin: 0 0 4px 0; font-size: 20px; }
+    .meta { color: #666; font-size: 11px; }
+    table { border-collapse: collapse; width: 100%; margin: 10px 0 20px 0; }
+    th, td { border: 1px solid #aaa; padding: 6px 8px; }
+    th { background: #f0f0f0; text-align: left; }
+    .charts { display: block; }
+    .chart { page-break-inside: avoid; margin-bottom: 16px; text-align: center; }
+    .chart h3 { margin: 6px 0; font-size: 14px; }
+    img { max-width: 100%; height: auto; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>{{ title }}</h1>
+    <div class="meta">Generado: {{ generated_at }}</div>
+  </header>
+
+  <section>
+    <h2>Tabla</h2>
+    <table>
+      <thead>
+        <tr>
+          {% for h in headers %}<th>{{ h }}</th>{% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          {% for cell in row %}<td>{{ cell }}</td>{% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+
+  {% if charts %}
+  <section class="charts">
+    <h2>Gráficos</h2>
+    {% for ch in charts %}
+    <div class="chart">
+      <h3>{{ ch.title }}</h3>
+      <img src="{{ ch.src }}" alt="{{ ch.id }}" />
+    </div>
+    {% endfor %}
+  </section>
+  {% endif %}
+</body>
+</html>

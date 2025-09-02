@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: api-dev
+    env_file:
+      - .env.dev
+    volumes:
+      - ./:/app  # en Windows con WSL: apunte a ruta dentro de WSL para mejor performance
+    ports:
+      - "8000:8000"
