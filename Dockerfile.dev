@@ -4,14 +4,21 @@ FROM python:3.11-slim-bookworm
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential curl git \
     libcairo2 libpango-1.0-0 libpangocairo-1.0-0 libpangoft2-1.0-0 \
-    libgdk-pixbuf-2.0-0 shared-mime-info fonts-dejavu \
-    && rm -rf /var/lib/apt/lists/*
+    libgdk-pixbuf-2.0-0 shared-mime-info fonts-dejavu fontconfig \
+  && rm -rf /var/lib/apt/lists/*
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    MPLBACKEND=Agg
 
 WORKDIR /app
 COPY requirements.txt /app/requirements.txt
-RUN pip install --no-cache-dir -r /app/requirements.txt
+RUN pip install --upgrade pip && pip install --no-cache-dir -r /app/requirements.txt
+
+# En dev montaremos el código como volumen, pero copiamos para builds limpios
 COPY . /app
 
-# En Windows/WSL es más cómodo dejar root en dev
 EXPOSE 8000
+# ⚠️ Elija UNO de estos CMD según su módulo real:
 CMD ["bash", "-lc", "uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"]
+# CMD ["bash", "-lc", "uvicorn init_fastapi:app --host 0.0.0.0 --port 8000 --reload"]
